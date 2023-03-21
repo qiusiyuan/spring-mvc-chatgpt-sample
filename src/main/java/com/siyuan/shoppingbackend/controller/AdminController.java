@@ -24,8 +24,8 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard")
     public String dashboard(Model model) {
-        List<Product> products = productService.getAllProducts();
-        List<User> users = userService.getAllUsers();
+        List<Product> products = productService.findAll();
+        List<User> users = userService.findAll();
 
         model.addAttribute("products", products);
         model.addAttribute("users", users);
@@ -38,7 +38,7 @@ public class AdminController {
                              @RequestParam("price") double price,
                              @RequestParam("description") String description) {
         Product product = new Product(name, price, description);
-        productService.addProduct(product);
+        productService.save(product);
 
         return "redirect:/admin/dashboard";
     }
@@ -48,7 +48,7 @@ public class AdminController {
                           @RequestParam("email") String email,
                           @RequestParam("password") String password) {
         User user = new User(username, email, password);
-        userService.addUser(user);
+        userService.save(user);
 
         return "redirect:/admin/dashboard";
     }
