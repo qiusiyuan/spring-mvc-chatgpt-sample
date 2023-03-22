@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.util.List;
 
 @Controller
@@ -25,9 +28,10 @@ public class AdminController {
     private UserService userService;
 
     @GetMapping("/admin/dashboard")
-    public String dashboard(Model model) {
-        List<Product> products = productService.findAll();
-        List<User> users = userService.findAll();
+    public String dashboard(@RequestParam(defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Product> products = productService.findAll(pageable);
+        Page<User> users = userService.findAll(pageable);
 
         model.addAttribute("products", products);
         model.addAttribute("users", users);
