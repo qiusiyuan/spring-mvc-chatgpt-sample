@@ -5,11 +5,13 @@ import com.siyuan.shoppingbackend.model.User;
 import com.siyuan.shoppingbackend.service.ProductService;
 import com.siyuan.shoppingbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
@@ -41,6 +43,11 @@ public class AdminController {
         productService.save(product);
 
         return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping("/")
+    public String showForm() {
+        return "sample";
     }
 
     @PostMapping("/admin/addUser")
